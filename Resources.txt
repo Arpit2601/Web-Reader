@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/50782412/promise-resolve-not-called-because-popup-closes-too-fast/50992264#50992264

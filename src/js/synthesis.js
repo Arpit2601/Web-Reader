@@ -1,28 +1,29 @@
 const sdk = require("microsoft-cognitiveservices-speech-sdk");
-// console.log(process.env.WEB_READER_SUB_KEY);
 // TODO:: change subscription key and region to env variables
-const subscriptionKey = "10b322ea334247e0bd2e5660ab08a704";
-const serviceRegion = "centralindia"; // e.g., "westus"
+// Not possible like this as extension does not have access to the host OS.
+// To tackle this either implement host messaging protocol or run a script to get env variables before starting the extension or get variables from users in UI
+// console.log(process.env.WEB_READER_SUB_KEY);
+const subscriptionKey = "Your Subscription Key";
+const serviceRegion = "Subscription Region"; // e.g., "centralindia"
 
 const speechConfig = sdk.SpeechConfig.fromSubscription(subscriptionKey, serviceRegion);
-// TODO:: see how to output to speakers directly
 const audioConfig = sdk.AudioConfig.fromSpeakerOutput();
 
 
 module.exports = function Speak(text) {
     const synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
-    synthesizer.speakTextAsync(
-        text,
-        result => {
-            if (result) {
-                console.log(JSON.stringify(result));
-            }
-            synthesizer.close();
-        },
-        error => {
-            console.log(error);
-            synthesizer.close();
-        });
-
+    chrome.extension.getBackgroundPage().console.log("In synthesis file. " + text);
+        synthesizer.speakTextAsync(
+            text,
+            result => {
+                if (result) {
+                    chrome.extension.getBackgroundPage().console.log(JSON.stringify(result));
+                }
+                synthesizer.close();
+            },
+            error => {
+                chrome.extension.getBackgroundPage().console.log(error);
+                synthesizer.close();
+            });
 }
 
