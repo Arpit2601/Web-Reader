@@ -1,22 +1,52 @@
 const back_console = chrome.extension.getBackgroundPage().console;
+
 /*
-When play button is pressed on popup.html file, the popup.js file retrieves the
-selected text then stores it in storage and sends a message to background.js file
-which in turn runs the synthesis file to convert text to speech.
+    Chrome storage stores text and current action of media control.
  */
+
 window.onload = function () {
 
+    // set text area to current playing text
+    // chrome.storage.local.get(['text'], function (result){
+    //     document.getElementById("selectedText").value = result.key;
+    // });
     // Play button
     document.getElementById('play').onclick = function (element) {
-        chrome.tabs.executeScript({
-            code: "window.getSelection().toString();"
-        }, function (selection) {
-            document.getElementById("selectedText").value = selection[0];
-            chrome.storage.local.set({text:selection[0]}, function (){
-                back_console.log("Sent message");
-                chrome.runtime.sendMessage({media_control:"Play", text:selection[0]});
-            });
+        chrome.storage.local.get("current_action", function (result) {
+           if(result.current_action.toString() === "Stopped")
+           {
+               back_console.log("Currently stopped.");
+               // Get selected text -> store it in storage -> send message to background
+               chrome.tabs.executeScript({code: "window.getSelection().toString();"}, function (selection){
+                   document.getElementById("selectedText").value = selection[0];
+                   back_console.log(`Selected text: ${selection[0]}`);    // TODO: what if selection null
+                   chrome.storage.local.set({text: selection[0]}, function (){
+                       back_console.log("Play message sent.");
+                       chrome.runtime.sendMessage({media_control: "Play"}, function (){});
+
+                  }) ;
+               });
+           }
+           else if(result.current_action.toString() === "Paused")
+           {
+               // Continue playing previous text
+               // simply send play message to background
+               back_console.log("Currently paused.");
+               chrome.runtime.sendMessage({media_control: "Play"}, function (){
+                  back_console.log("Play message sent.");
+               });
+           }
+           else if(result.current_action.toString() === "Playing")
+           {
+               // Continue playing previous text
+               // simply send play message to background
+               back_console.log("Currently playing.");
+               chrome.runtime.sendMessage({media_control: "Play"}, function (){
+                   back_console.log("Play message sent.");
+               });
+           }
         });
+
     }
 
     // Pause button
@@ -27,6 +57,7 @@ window.onload = function () {
     // Stop button
     document.getElementById('stop').onclick = function () {
         chrome.runtime.sendMessage({media_control: "Stop"});
+        document.getElementById("selectedText").value = "";
     }
 
 
