@@ -7,9 +7,9 @@ const back_console = chrome.extension.getBackgroundPage().console;
 window.onload = function () {
 
     // set text area to current playing text
-    // chrome.storage.local.get(['text'], function (result){
-    //     document.getElementById("selectedText").value = result.key;
-    // });
+    chrome.storage.local.get("text", function (result){
+        document.getElementById("selectedText").value = result.text;
+    });
     // Play button
     document.getElementById('play').onclick = function (element) {
         chrome.storage.local.get("current_action", function (result) {
@@ -19,12 +19,16 @@ window.onload = function () {
                // Get selected text -> store it in storage -> send message to background
                chrome.tabs.executeScript({code: "window.getSelection().toString();"}, function (selection){
                    document.getElementById("selectedText").value = selection[0];
-                   back_console.log(`Selected text: ${selection[0]}`);    // TODO: what if selection null
-                   chrome.storage.local.set({text: selection[0]}, function (){
-                       back_console.log("Play message sent.");
-                       chrome.runtime.sendMessage({media_control: "Play"}, function (){});
+                   back_console.log(`Selected text: ${selection[0]}`);
+                   if(selection[0]!=="")
+                   {
+                       chrome.storage.local.set({text: selection[0]}, function (){
+                           back_console.log("Play message sent.");
+                           chrome.runtime.sendMessage({media_control: "Play"}, function (){});
 
-                  }) ;
+                       }) ;
+                   }
+
                });
            }
            else if(result.current_action.toString() === "Paused")

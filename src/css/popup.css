@@ -1,0 +1,29 @@
+#buttons {
+    min-width: 100px;
+    text-align: center;
+    margin: 10px;
+}
+
+#pause, #stop {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+    margin-left: 10px
+}
+
+#play {
+    width: 25px;
+    height: 25px;
+    object-fit: cover
+}
+
+#selectedText {
+    min-width: 400px;
+    max-width: 400px;
+    height: 400px;
+    overflow: auto;
+    word-wrap: break-word;
+    position: relative;
+    overflow-y: scroll;
+
+}

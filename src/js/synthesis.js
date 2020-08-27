@@ -5,8 +5,8 @@ const sdk = require("microsoft-cognitiveservices-speech-sdk");
 // Not possible like this as extension does not have access to the host OS.
 // To tackle this either implement host messaging protocol or run a script to get env variables before starting the extension or get variables from users in UI
 // console.log(process.env.WEB_READER_SUB_KEY);
-const subscriptionKey = "Your subscription key.";
-const serviceRegion = "Your subscription region."; // e.g., "centralindia"
+const subscriptionKey = "Your subscription key";
+const serviceRegion = "Your subscription region"; // e.g., "centralindia"
 const back_console = chrome.extension.getBackgroundPage().console;
 
 
@@ -37,7 +37,6 @@ function Speak(text) {
     //         });
     //-----------------------------------------------------------------
     // This just returns the array buffer of audio output.
-    // TODO: does it return full buffer in one go or can we get chunks and then work on them
     const synthesizer = new sdk.SpeechSynthesizer(speechConfig, null);
 
     synthesizer.speakTextAsync(
@@ -68,7 +67,6 @@ function Load(audioData)
     });
 
 }
-// TODO: how to know that audio buffer has finished so that current_action can be changed
 function Play()
 {
     back_console.log("In Play function.");
@@ -76,7 +74,6 @@ function Play()
     source.buffer = soundBuffer;
     source.connect(context.destination);
     source.addEventListener('ended', () => {
-        // TODO: How to identify if the paused or audio is finished.
         if(paused === true)
         {
             // Do nothing
@@ -97,9 +94,9 @@ function Play()
 
         if(pausedAt)
         {
-            back_console.log("Resuming from: " + pausedAt/1000);
-            startedAt = Date.now() - pausedAt;
-            source.start(0, pausedAt/1000); // Offset only possible in seconds
+            back_console.log("Resuming from: " + (pausedAt-startedAt)/1000);
+            source.start(0, (pausedAt-startedAt)/1000); // Offset only possible in seconds
+            // startedAt = Date.now();
         }
         else
         {
@@ -128,7 +125,8 @@ function Pause()
 
 function Stop()
 {
-    back_console.log("In Stop function.")
+    back_console.log("In Stop function.");
+    source.stop(0);
     soundBuffer = null;
     pausedAt = null;
 
