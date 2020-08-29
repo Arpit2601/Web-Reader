@@ -1,12 +1,12 @@
 const sdk = require("microsoft-cognitiveservices-speech-sdk");
-
+const fs = require("fs");
 
 // TODO:: change subscription key and region to env variables
 // Not possible like this as extension does not have access to the host OS.
 // To tackle this either implement host messaging protocol or run a script to get env variables before starting the extension or get variables from users in UI
 // console.log(process.env.WEB_READER_SUB_KEY);
-const subscriptionKey = "Your subscription key";
-const serviceRegion = "Your subscription region"; // e.g., "centralindia"
+const subscriptionKey = "Your Subscription Key";
+const serviceRegion = "Your Subscription region"; // e.g., "centralindia"
 const back_console = chrome.extension.getBackgroundPage().console;
 
 
@@ -19,27 +19,10 @@ let pausedAt;
 let soundBuffer;
 
 function Speak(text) {
-    //----------------------------------------------------------------
-    // This works and outputs directly to speaker
-    // const synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
-    // chrome.extension.getBackgroundPage().console.log("In synthesis file. " + text);
-    //     synthesizer.speakTextAsync(
-    //         text,
-    //         result => {
-    //             if (result) {
-    //                 chrome.extension.getBackgroundPage().console.log(JSON.stringify(result));
-    //             }
-    //             synthesizer.close();
-    //         },
-    //         error => {
-    //             chrome.extension.getBackgroundPage().console.log(error);
-    //             synthesizer.close();
-    //         });
-    //-----------------------------------------------------------------
+
     // This just returns the array buffer of audio output.
     const synthesizer = new sdk.SpeechSynthesizer(speechConfig, null);
-
-    synthesizer.speakTextAsync(
+    synthesizer.speakSsmlAsync(
         text,
         result => {
             // Interact with the audio ArrayBuffer data

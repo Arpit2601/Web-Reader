@@ -19,17 +19,18 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="574f64cf-4792-40f8-a05a-2abd24c2fdfb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/html/popup.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/popup.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/bundle_background.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/bundle_background.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/popup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/popup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/synthesis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/synthesis.js" afterDir="false" />
-    </list>
+    <list default="true" id="574f64cf-4792-40f8-a05a-2abd24c2fdfb" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -46,6 +47,7 @@
     <property name="javascript.nodejs.core.library.configured.version" value="12.16.1" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.12.54" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/modules" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
@@ -65,7 +67,7 @@
       <workItem from="1598005342179" duration="140000" />
       <workItem from="1598246067672" duration="11072000" />
       <workItem from="1598360453689" duration="21036000" />
-      <workItem from="1598506001600" duration="1361000" />
+      <workItem from="1598506001600" duration="2907000" />
     </task>
     <servers />
   </component>
