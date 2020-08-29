@@ -3,7 +3,7 @@ const xmlcont = chrome.runtime.getURL("ssml.xml");
 
 chrome.runtime.onInstalled.addListener(function() {
     console.log("Extension loaded");
-    chrome.storage.local.set({current_action: "Stopped", text: ""}, function () {
+    chrome.storage.local.set({current_action: "Stopped", text: "", speed: "1"}, function () {
         console.log(`Initially in stopped state.`);
     });
 });
@@ -32,12 +32,12 @@ function GetSSMLText(xhr, message)
         {
             // First retrieve text from chrome storage
             console.log("Play message received.");
-            chrome.storage.local.get("text", function (result){
-                console.log(`Play: ${result.text}`);
+            chrome.storage.local.get(["text", "language", "voice", "speed"], function (result){
+                console.log(`Play: ${result.text}\n with language: ${result.language} and voice of ${result.voice}`);
                 // change the text in voice tag to result.text then call Speak
-                const xmlText = XMLEdit(xhr.responseText, result.text);
+                const xmlText = XMLEdit(xhr.responseText, result.text, result.language, result.voice, result.speed);
                 console.log(xmlText);
-                synthesis.Speak(xmlText);
+                // synthesis.Speak(xmlText);
             });
 
         }
@@ -54,11 +54,14 @@ function GetSSMLText(xhr, message)
     }
 }
 
-function XMLEdit(xmlResponseText, newText)
+function XMLEdit(xmlResponseText, newText, language, voice, speed)
 {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlResponseText, "text/xml");
-    xmlDoc.getElementsByTagName("voice")[0].childNodes[0].nodeValue = newText;
+    xmlDoc.getElementsByTagName("prosody")[0].childNodes[0].nodeValue = newText;
+    xmlDoc.getElementsByTagName("speak")[0].setAttribute("xml:lang", language);
+    xmlDoc.getElementsByTagName("voice")[0].setAttribute("name", voice);
+    xmlDoc.getElementsByTagName("prosody")[0].setAttribute("rate", speed);
     return new XMLSerializer().serializeToString(xmlDoc);
 }
 
