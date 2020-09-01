@@ -1,5 +1,7 @@
 const synthesis = require("./synthesis")
 const xmlcont = chrome.runtime.getURL("ssml.xml");
+const worker = new Worker('./Worker.js');
+
 
 chrome.runtime.onInstalled.addListener(function() {
     console.log("Extension loaded");
@@ -7,9 +9,10 @@ chrome.runtime.onInstalled.addListener(function() {
         console.log(`Initially in stopped state.`);
     });
 });
-
-// bundle_background.js file is used as background script as it has all the required modules.
-// To create it use "browserify background.js -o bundle_background.js -d"
+/*
+    bundle_background.js file is used as background script as it has all the required modules.
+    To create it use "browserify background.js -o bundle_background.js -d"
+*/
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     console.log("Got message in background.");
     const xhr = new XMLHttpRequest();
@@ -30,14 +33,11 @@ function GetSSMLText(xhr, message)
         const media_control = message.media_control;
         if(media_control === "Play")
         {
-            // First retrieve text from chrome storage
+            // First retrieve text from chrome storage then start/resume worker
             console.log("Play message received.");
             chrome.storage.local.get(["text", "language", "voice", "speed"], function (result){
                 console.log(`Play: ${result.text}\n with language: ${result.language} and voice of ${result.voice}`);
-                // change the text in voice tag to result.text then call Speak
-                const xmlText = XMLEdit(xhr.responseText, result.text, result.language, result.voice, result.speed);
-                console.log(xmlText);
-                // synthesis.Speak(xmlText);
+                worker.sendMessage({msg: 'Play', xmlResponseText: xhr.responseText, text: result.text, language: result.language, voice: result.voice, speed: result.speed});
             });
 
         }
@@ -45,23 +45,18 @@ function GetSSMLText(xhr, message)
         {
             console.log(`Pause.`);
             synthesis.Pause();
+            /*
+                Even though we are sending this message it will never be used by worker as it also a single thread
+            */
+            // worker.sendMessage({msg: 'Pause'});
         }
         else if(media_control === "Stop")
         {
             console.log(`Stop.`)
             synthesis.Stop();
+            // worker.sendMessage({msg: 'Stop'});
         }
     }
 }
 
-function XMLEdit(xmlResponseText, newText, language, voice, speed)
-{
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlResponseText, "text/xml");
-    xmlDoc.getElementsByTagName("prosody")[0].childNodes[0].nodeValue = newText;
-    xmlDoc.getElementsByTagName("speak")[0].setAttribute("xml:lang", language);
-    xmlDoc.getElementsByTagName("voice")[0].setAttribute("name", voice);
-    xmlDoc.getElementsByTagName("prosody")[0].setAttribute("rate", speed);
-    return new XMLSerializer().serializeToString(xmlDoc);
-}
 

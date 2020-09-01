@@ -19,7 +19,15 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="574f64cf-4792-40f8-a05a-2abd24c2fdfb" name="Default Changelist" comment="" />
+    <list default="true" id="574f64cf-4792-40f8-a05a-2abd24c2fdfb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/js/Worker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Resources.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/html/popup.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/popup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/background.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/background.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/bundle_background.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/bundle_background.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/synthesis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/synthesis.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +37,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -50,8 +59,12 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/modules" />
     </key>
@@ -68,6 +81,10 @@
       <workItem from="1598246067672" duration="11072000" />
       <workItem from="1598360453689" duration="21036000" />
       <workItem from="1598506001600" duration="2907000" />
+      <workItem from="1598677282840" duration="13652000" />
+      <workItem from="1598764430546" duration="5015000" />
+      <workItem from="1598783076146" duration="105000" />
+      <workItem from="1598873796388" duration="9089000" />
     </task>
     <servers />
   </component>
@@ -87,9 +104,13 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1103" y="239" width="672" height="678" key="search.everywhere.popup" timestamp="1598461167870">
+    <state x="464" y="58" width="760" height="880" maximized="true" key="DiffContextDialog" timestamp="1598767007804">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="1103" y="239" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1598461167870" />
+    <state x="464" y="58" width="760" height="880" maximized="true" key="DiffContextDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1598767007804" />
+    <state x="1103" y="239" width="672" height="678" key="search.everywhere.popup" timestamp="1598783107140">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="1103" y="239" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1598783107140" />
   </component>
 </project>

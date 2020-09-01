@@ -1,6 +1,6 @@
 TODO:
-1.  Use SSML to customize speech i.e. change language, speed and pitch.
-2.  Speak on right click after selecting text.
-3.  Send only chunks of data to API at a time, because user might stop the process in middle.
-4.  What if someone wants to go back to previous text or majorly text highlighting.
-5.  Start reading from this position.
+1.  Send only chunks of data to API at a time, because user might stop the process in middle.
+2.  What if someone wants to go back to previous text or majorly text highlighting.
+3.  Start reading from this position.
+4.  Error condition for "Not able to decode" in UI
+

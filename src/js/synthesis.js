@@ -1,5 +1,4 @@
 const sdk = require("microsoft-cognitiveservices-speech-sdk");
-const fs = require("fs");
 
 // TODO:: change subscription key and region to env variables
 // Not possible like this as extension does not have access to the host OS.
@@ -17,6 +16,8 @@ let paused;
 let startedAt;
 let pausedAt;
 let soundBuffer;
+let stopped;
+
 
 function Speak(text) {
 
@@ -27,7 +28,7 @@ function Speak(text) {
         result => {
             // Interact with the audio ArrayBuffer data
             const audioData = result.audioData;
-            back_console.log(`Audio data byte size: ${audioData.byteLength}.`)
+            back_console.log(`Audio data byte size: ${audioData.byteLength}.`);
             back_console.log(`Audio Data: ${audioData}`);
             Load(audioData);
             synthesizer.close();
@@ -43,7 +44,7 @@ function Load(audioData)
     back_console.log("In Load function.");
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     context.decodeAudioData(audioData, function (soundBuffer_temp){
-        soundBuffer = soundBuffer_temp;
+        soundBuffer = soundBuffer_temp;     // Append the soundBuffer_temp (https://stackoverflow.com/questions/33702838/how-to-append-bytes-multi-bytes-and-buffer-to-arraybuffer-in-javascript)
         Play();
     }, function (err){
         back_console.log("couldn't decode buffer");
@@ -54,6 +55,11 @@ function Play()
 {
     back_console.log("In Play function.");
     source = context.createBufferSource();
+    /*
+        Here also we will need to use sourceBuffer.appendBuffer();
+        https://developer.mozilla.org/en-US/docs/Web/API/SourceBuffer/appendBuffer
+        https://developer.mozilla.org/en-US/docs/Web/API/SourceBuffer
+     */
     source.buffer = soundBuffer;
     source.connect(context.destination);
     source.addEventListener('ended', () => {
@@ -72,6 +78,7 @@ function Play()
 
     });
     paused = false;
+    stopped = false;
     chrome.storage.local.set({current_action: "Playing"}, function (){
         back_console.log("Current_action set to Playing.");
 
@@ -112,7 +119,7 @@ function Stop()
     source.stop(0);
     soundBuffer = null;
     pausedAt = null;
-
+    stopped = true;
     chrome.storage.local.set({current_action: "Stopped"}, function (){
         back_console.log("Current_action set to Stopped.");
     });
@@ -128,4 +135,4 @@ function onEnded()
     });
 }
 
-module.exports = {Speak: Speak, Pause: Pause, Stop: Stop};
+module.exports = {Speak: Speak, Pause: Pause, Stop: Stop, paused: paused, stopped: stopped};
